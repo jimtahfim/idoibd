@@ -1,0 +1,101 @@
+.outcomes-grid {
+  gap: 60px;
+}
+
+.outcomes-visual {
+  position: relative;
+  padding: 20px;
+}
+
+.visual-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: 15px;
+  background: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.outcomes-img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+
+.experience-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  box-shadow: var(--shadow-md);
+}
+
+.badge-year {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.badge-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 80px;
+  line-height: 1.2;
+}
+
+.outcomes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.outcome-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.outcome-item:hover {
+  transform: translateX(10px);
+}
+
+.outcome-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.outcome-text {
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 992px) {
+  .outcomes-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .outcomes-visual {
+    padding: 0;
+    margin-bottom: 30px;
+  }
+  
+  .experience-badge {
+    bottom: 20px;
+    right: 20px;
+  }
+}

@@ -1,0 +1,122 @@
+.testimonials-slider-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.testimonials-slider-container::before,
+.testimonials-slider-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.testimonials-slider-container::before {
+  left: 0;
+  background: linear-gradient(to right, white, transparent);
+}
+
+.testimonials-slider-container::after {
+  right: 0;
+  background: linear-gradient(to left, white, transparent);
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  animation: scroll-left 40s linear infinite;
+}
+
+.testimonials-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 15px)); }
+}
+
+.testimonial-card {
+  min-width: 350px;
+  flex: 0 0 auto;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+  scroll-snap-align: center;
+  transition: box-shadow var(--transition-normal);
+}
+
+.testimonial-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.quote-icon {
+  color: rgba(24, 183, 119, 0.1);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transform: rotate(180deg);
+}
+
+.rating {
+  display: flex;
+  gap: 4px;
+  color: var(--gold-support);
+  margin-bottom: 20px;
+}
+
+.testimonial-text {
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 20px;
+}
+
+.author-avatar {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.author-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.author-course {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    min-width: 300px;
+  }
+}

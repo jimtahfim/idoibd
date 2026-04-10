@@ -1,0 +1,117 @@
+{
+  "running": [
+    {
+      "id": "c1",
+      "title": "কুরআন শিক্ষা ও তাজবীদ",
+      "instructor": "মাওলানা আহমাদ উল্লাহ",
+      "duration": "৩ মাস",
+      "mode": "অনলাইন লাইভ",
+      "fee": "১৫০০ ৳",
+      "thumbnail": "/images/hero_slide_2_1775794216483.png",
+      "badges": ["জনপ্রিয়", "চলমান"]
+    },
+    {
+      "id": "c2",
+      "title": "প্রাথমিক ফিকহ কোর্স",
+      "instructor": "মুফতি আব্দুর রহমান",
+      "duration": "৪ মাস",
+      "mode": "রেকর্ডেড",
+      "fee": "১২০০ ৳",
+      "thumbnail": "/images/about_img_1775794261757.png",
+      "badges": ["নতুন", "চলমান"]
+    },
+    {
+      "id": "c3",
+      "title": "হাদিস অধ্যয়ন (বেসিক)",
+      "instructor": "শায়েখ আব্দুল্লাহ মামুন",
+      "duration": "৬ মাস",
+      "mode": "অনলাইন লাইভ",
+      "fee": "২০০০ ৳",
+      "thumbnail": "/images/hero_slide_1_1775794201184.png",
+      "badges": ["জনপ্রিয়"]
+    },
+    {
+      "id": "c4",
+      "title": "ইসলামি আকিদা",
+      "instructor": "মাওলানা আবু বকর",
+      "duration": "২ মাস",
+      "mode": "রেকর্ডেড",
+      "fee": "৮০০ ৳",
+      "thumbnail": "/images/video_thumb_1775794231335.png",
+      "badges": ["চলমান"]
+    }
+  ],
+  "upcoming": [
+    {
+      "id": "u1",
+      "title": "উন্নত আরবি ভাষা শিক্ষা",
+      "instructor": "ড. মোহাম্মদ আতাউল্লাহ",
+      "duration": "৬ মাস",
+      "mode": "অনলাইন লাইভ",
+      "fee": "২৫০০ ৳",
+      "thumbnail": "/images/outcomes_img_1775794246035.png",
+      "badges": ["আসন্ন"],
+      "startDate": "15 May 2026",
+      "seatsLeft": 25,
+      "daysLeft": 35
+    },
+    {
+      "id": "u2",
+      "title": "উসূলুল ফিকহ",
+      "instructor": "মুফতি আব্দুর রহমান",
+      "duration": "৩ মাস",
+      "mode": "অনলাইন লাইভ",
+      "fee": "১৮০০ ৳",
+      "thumbnail": "/images/hero_slide_2_1775794216483.png",
+      "badges": ["আসন্ন"],
+      "startDate": "01 June 2026",
+      "seatsLeft": 40,
+      "daysLeft": 52
+    },
+    {
+      "id": "u3",
+      "title": "তারবিয়া এবং تزكية (আত্মশুদ্ধি)",
+      "instructor": "মাওলানা আহমাদ উল্লাহ",
+      "duration": "১ মাস",
+      "mode": "রেকর্ডেড",
+      "fee": "৫০০ ৳",
+      "thumbnail": "/images/about_img_1775794261757.png",
+      "badges": ["নতুন"],
+      "startDate": "20 May 2026",
+      "seatsLeft": 100,
+      "daysLeft": 40
+    }
+  ],
+  "short": [
+    {
+      "id": "s1",
+      "title": "এসো আরবি শিখি (ক্র্যাশ কোর্স)",
+      "instructor": "ড. মোহাম্মদ আতাউল্লাহ",
+      "duration": "১ মাস",
+      "mode": "অনলাইন লাইভ",
+      "fee": "৫০০ ৳",
+      "thumbnail": "/images/outcomes_img_1775794246035.png",
+      "badges": ["সংক্ষিপ্ত", "জনপ্রিয়"]
+    },
+    {
+      "id": "s2",
+      "title": "সহিহ সালাত শিক্ষা",
+      "instructor": "মাওলানা আহমাদ উল্লাহ",
+      "duration": "১ সপ্তাহ",
+      "mode": "রেকর্ডেড",
+      "fee": "২০০ ৳",
+      "thumbnail": "/images/video_thumb_1775794231335.png",
+      "badges": ["সংক্ষিপ্ত", "নতুন"]
+    },
+    {
+      "id": "s3",
+      "title": "কুরআন রিডিং (বেসিক)",
+      "instructor": "শায়েখ আব্দুল্লাহ",
+      "duration": "১ মাস",
+      "mode": "অনলাইন লাইভ",
+      "fee": "৩০০ ৳",
+      "thumbnail": "/images/hero_slide_2_1775794216483.png",
+      "badges": ["সংক্ষিপ্ত"]
+    }
+  ]
+}
