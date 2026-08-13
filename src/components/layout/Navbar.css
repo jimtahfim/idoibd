@@ -1,0 +1,175 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all var(--transition-normal);
+  padding: 20px 0;
+}
+
+.navbar.transparent {
+  background-color: transparent;
+}
+
+.navbar.solid {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 15px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar.solid .nav-links a,
+.navbar.solid .dropdown-trigger {
+  color: var(--text-dark);
+}
+
+.navbar.transparent .nav-links a,
+.navbar.transparent .dropdown-trigger,
+.navbar.transparent .brand-name {
+  color: var(--text-dark); /* Normally white on transparent if background is dark, but here we keep dark since our background might vary */
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.brand-logo {
+  height: 65px;
+  width: auto;
+  object-fit: contain;
+  transition: transform var(--transition-normal);
+}
+
+.brand:hover .brand-logo {
+  transform: scale(1.05);
+}
+
+.brand-icon {
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-links a,
+.dropdown-trigger {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.nav-links a:hover,
+.dropdown-trigger:hover {
+  color: var(--primary);
+}
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 200px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.2s ease forwards;
+}
+
+.dropdown-menu li a {
+  padding: 10px 20px;
+  color: var(--text-dark);
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: var(--bg-mint);
+  color: var(--primary);
+}
+
+.mobile-toggle {
+  display: none;
+  color: var(--text-dark);
+}
+
+.mobile-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.w-full {
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-toggle {
+    display: block;
+  }
+  
+  .mobile-drawer {
+    display: block;
+  }
+  
+  .mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .mobile-links a, .dropdown-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: block;
+  }
+  
+  .sub-links {
+    margin-top: 10px;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 2px solid var(--bg-mint);
+  }
+  
+  .sub-links a {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+}
