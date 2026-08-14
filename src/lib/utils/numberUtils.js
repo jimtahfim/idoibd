@@ -24,7 +24,7 @@ export const toBanglaNumber = (num) => {
 export const formatCourseFee = (fee) => {
   const numericFee = typeof fee === 'string' ? parseFloat(fee) : fee;
   if (numericFee === null || numericFee === undefined || isNaN(numericFee) || numericFee === 0) {
-    return 'বিনামূল্যে (FREE)';
+    return 'বিনামূল্যে';
   }
   const formattedWithCommas = numericFee.toLocaleString('bn-BD');
   return `৳ ${formattedWithCommas}`;
