@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Clock, Video, BookOpen, GraduationCap, Briefcase, ExternalLink, Info, X, Sparkles, CheckCircle2 } from 'lucide-react';
+import { formatCourseFee } from '../../lib/utils/numberUtils';
 import './CourseCard.css';
 
-const ADMISSION_URL = "https://admission.idoibd.com/";
+const DEFAULT_ADMISSION_URL = "https://admission.idoibd.com/";
 
 const categoryThemeMap = {
   "মাদ্রাসা শিক্ষার্থী": {
@@ -25,11 +27,7 @@ const categoryThemeMap = {
 const CourseCard = ({ course }) => {
   const [showModal, setShowModal] = useState(false);
   const theme = categoryThemeMap[course.category] || categoryThemeMap["সাধারণ ও কর্মজীবি"];
-
-  const formatFee = (fee) => {
-    if (!fee || fee === 0) return "বিনামূল্যে";
-    return `৳ ${fee.toLocaleString('bn-BD') || fee}`;
-  };
+  const admissionUrl = course.admissionUrl || (course.slug ? `${DEFAULT_ADMISSION_URL}?course=${course.slug}` : DEFAULT_ADMISSION_URL);
 
   return (
     <>
@@ -58,25 +56,43 @@ const CourseCard = ({ course }) => {
         
         {/* Content */}
         <div className="course-card-body">
-          <h3 className="course-title">{course.name}</h3>
+          <h3 className="course-title">
+            {course.slug ? (
+              <Link to={`/courses/${course.slug}`} className="course-title-link">
+                {course.name}
+              </Link>
+            ) : (
+              course.name
+            )}
+          </h3>
           <p className="course-short-desc">{course.shortDescription}</p>
 
           <div className="course-card-footer">
             <div className="course-fee-container">
               <span className="fee-label">কোর্স ফি</span>
-              <span className="fee-amount">{formatFee(course.fee)}</span>
+              <span className="fee-amount">{formatCourseFee(course.fee)}</span>
             </div>
 
             <div className="course-card-actions">
-              <button 
-                onClick={() => setShowModal(true)} 
-                className="btn-details"
-                title="বিস্তারিত বিবরণ"
-              >
-                <Info size={16} /> বিবরণ
-              </button>
+              {course.slug ? (
+                <Link 
+                  to={`/courses/${course.slug}`} 
+                  className="btn-details"
+                  title="বিস্তারিত বিবরণ"
+                >
+                  <Info size={16} /> বিবরণ
+                </Link>
+              ) : (
+                <button 
+                  onClick={() => setShowModal(true)} 
+                  className="btn-details"
+                  title="বিস্তারিত বিবরণ"
+                >
+                  <Info size={16} /> বিবরণ
+                </button>
+              )}
               <a 
-                href={ADMISSION_URL} 
+                href={admissionUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-admission"
@@ -116,7 +132,7 @@ const CourseCard = ({ course }) => {
                 </div>
                 <div className="meta-box">
                   <span className="meta-box-label">কোর্স ফি</span>
-                  <span className="meta-box-value highlight">{formatFee(course.fee)}</span>
+                  <span className="meta-box-value highlight">{formatCourseFee(course.fee)}</span>
                 </div>
               </div>
 
@@ -144,7 +160,7 @@ const CourseCard = ({ course }) => {
                   বন্ধ করুন
                 </button>
                 <a 
-                  href={ADMISSION_URL} 
+                  href={admissionUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="btn-modal-admission"

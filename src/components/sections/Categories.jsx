@@ -9,12 +9,6 @@ const iconMap = {
   Users: <Briefcase size={32} />
 };
 
-const hashMap = {
-  "madrasa": "madrasa",
-  "general": "general",
-  "pro": "pro"
-};
-
 const Categories = () => {
   return (
     <section className="section section-bg-white" id="categories">

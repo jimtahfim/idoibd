@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Search, Filter, Sparkles, BookOpen, GraduationCap, Briefcase, Layers } from 'lucide-react';
+import { Search, Filter, Sparkles, BookOpen, GraduationCap, Briefcase, Layers, RefreshCw, AlertCircle } from 'lucide-react';
 import CourseCard from './CourseCard';
-import coursesData from '../../data/courses.json';
+import { useCourses } from '../../hooks/useCourses';
+import { toBanglaNumber } from '../../lib/utils/numberUtils';
 import './CoursesSection.css';
 
 const categoriesList = [
@@ -23,33 +24,27 @@ const categoryHashAlias = {
 
 const CoursesSection = () => {
   const location = useLocation();
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const { courses, loading, error, refetch } = useCourses();
+  const [userSelectedCategory, setUserSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    if (location && location.hash) {
-      const hash = decodeURIComponent(location.hash.replace('#', ''));
-      if (categoryHashAlias[hash]) {
-        setSelectedCategory(categoryHashAlias[hash]);
-      } else if (categoriesList.some(c => c.id === hash)) {
-        setSelectedCategory(hash);
-      }
-    }
-  }, [location.hash]);
+  const hash = location?.hash ? decodeURIComponent(location.hash.replace('#', '')) : '';
+  const hashCategory = categoryHashAlias[hash] || (categoriesList.some(c => c.id === hash) ? hash : null);
+  const selectedCategory = userSelectedCategory || hashCategory || 'all';
 
-  const filteredCourses = coursesData.filter(course => {
+  const filteredCourses = courses.filter(course => {
     const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
     const matchesSearch = 
       course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (course.shortDescription && course.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (course.description && course.description.toLowerCase().includes(searchQuery.toLowerCase()));
     
     return matchesCategory && matchesSearch;
   });
 
   const getCountForCategory = (catId) => {
-    if (catId === 'all') return coursesData.length;
-    return coursesData.filter(c => c.category === catId).length;
+    if (catId === 'all') return courses.length;
+    return courses.filter(c => c.category === catId).length;
   };
 
   return (
@@ -77,11 +72,11 @@ const CoursesSection = () => {
                 <button
                   key={cat.id}
                   className={`category-tab-btn ${isActive ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(cat.id)}
+                  onClick={() => setUserSelectedCategory(cat.id)}
                 >
                   <span className="tab-icon">{cat.icon}</span>
                   <span className="tab-label">{cat.label}</span>
-                  <span className="tab-count">{count}</span>
+                  <span className="tab-count">{toBanglaNumber(count)}</span>
                 </button>
               );
             })}
@@ -106,34 +101,65 @@ const CoursesSection = () => {
         </div>
 
         {/* Active Filter Info / Stats */}
-        <div className="courses-stats-strip">
-          <span className="stats-text">
-            <Filter size={15} /> 
-            {selectedCategory === 'all' 
-              ? 'সকল ক্যাটাগরিতে' 
-              : `"${selectedCategory}" ক্যাটাগরিতে`} 
-            মোট <strong>{filteredCourses.length}</strong> টি কোর্স প্রদর্শিত হচ্ছে
-          </span>
-        </div>
+        {!loading && !error && (
+          <div className="courses-stats-strip">
+            <span className="stats-text">
+              <Filter size={15} /> 
+              {selectedCategory === 'all' 
+                ? 'সকল ক্যাটাগরিতে' 
+                : `"${selectedCategory}" ক্যাটাগরিতে`} 
+              মোট <strong>{toBanglaNumber(filteredCourses.length)}</strong> টি কোর্স প্রদর্শিত হচ্ছে
+            </span>
+          </div>
+        )}
+
+        {/* Loading Skeleton Grid */}
+        {loading && (
+          <div className="grid grid-cols-3 gap-6 courses-grid">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <div key={n} className="skeleton-card">
+                <div className="skeleton-banner"></div>
+                <div className="skeleton-line medium"></div>
+                <div className="skeleton-line"></div>
+                <div className="skeleton-line short"></div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error State */}
+        {!loading && error && (
+          <div className="courses-error-state">
+            <AlertCircle size={48} color="#dc2626" style={{ margin: '0 auto 16px auto' }} />
+            <h3>কোর্স তথ্য লোড করা সম্ভব হয়নি</h3>
+            <p>{error}</p>
+            <button className="btn-retry" onClick={refetch}>
+              <RefreshCw size={16} /> পুনরায় চেষ্টা করুন
+            </button>
+          </div>
+        )}
 
         {/* Courses Grid */}
-        {filteredCourses.length > 0 ? (
+        {!loading && !error && filteredCourses.length > 0 && (
           <div className="grid grid-cols-3 gap-6 courses-grid">
             {filteredCourses.map((course) => (
               <CourseCard 
-                key={course.$id || course.slug} 
+                key={course.id || course.slug} 
                 course={course} 
               />
             ))}
           </div>
-        ) : (
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && filteredCourses.length === 0 && (
           <div className="courses-empty-state">
             <div className="empty-icon"><Search size={48} /></div>
             <h3>কোনো কোর্স খুঁজে পাওয়া যায়নি!</h3>
-            <p>আপনার অনুসন্ধানের সাথে মেলে এমন কোনো কোর্স এই মুহূর্তে নেই।</p>
+            <p>আপনার অনুসন্ধানের সাথে মেলে এমন কোনো সক্রিয় কোর্স এই মুহূর্তে নেই।</p>
             <button 
               className="btn btn-primary" 
-              onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
+              onClick={() => { setUserSelectedCategory('all'); setSearchQuery(''); }}
               style={{ marginTop: '16px' }}
             >
               সকল কোর্স দেখুন

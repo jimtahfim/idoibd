@@ -149,7 +149,14 @@
   transition: color 0.2s ease;
 }
 
-.course-card:hover .course-title {
+.course-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.course-card:hover .course-title,
+.course-title-link:hover {
   color: var(--primary);
 }
 

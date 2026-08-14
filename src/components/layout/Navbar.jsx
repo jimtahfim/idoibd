@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronDown, ExternalLink } from 'lucide-react';
 import './Navbar.css';
-import siteData from '../../data/site.json';
 
 const ADMISSION_URL = "https://admission.idoibd.com/";
 
@@ -56,7 +55,7 @@ const Navbar = () => {
             </Link>
             {activeDropdown === 'courses' && (
               <ul className="dropdown-menu">
-                <li><Link to="/courses">সকল কোর্স (৩৩)</Link></li>
+                <li><Link to="/courses">সকল কোর্স</Link></li>
                 <li><Link to="/courses#madrasa">মাদ্রাসা শিক্ষার্থী</Link></li>
                 <li><Link to="/courses#general">জেনারেল ছাত্র</Link></li>
                 <li><Link to="/courses#pro">সাধারণ ও কর্মজীবি</Link></li>
