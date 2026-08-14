@@ -15,17 +15,16 @@ export const toBanglaNumber = (num) => {
 
 /**
  * Formats course fee to Bangla currency string.
+ * - If fee === 0: 'বিনামূল্যে (FREE)'
+ * - If fee > 0: '৳ ১,৫০০'
  * 
  * @param {number|string} fee 
  * @returns {string}
  */
 export const formatCourseFee = (fee) => {
-  if (fee === null || fee === undefined || fee === 0 || fee === '0') {
-    return 'বিনামূল্যে';
-  }
   const numericFee = typeof fee === 'string' ? parseFloat(fee) : fee;
-  if (isNaN(numericFee) || numericFee === 0) {
-    return 'বিনামূল্যে';
+  if (numericFee === null || numericFee === undefined || isNaN(numericFee) || numericFee === 0) {
+    return 'বিনামূল্যে (FREE)';
   }
   const formattedWithCommas = numericFee.toLocaleString('bn-BD');
   return `৳ ${formattedWithCommas}`;

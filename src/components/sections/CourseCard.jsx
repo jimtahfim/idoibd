@@ -40,8 +40,9 @@ const CourseCard = ({ course }) => {
               {theme.icon}
               {course.category}
             </span>
-            <span className="mode-badge">
-              <Video size={13} /> {course.learningMode}
+            <span className={`status-badge ${course.admissionOpen !== false ? 'status-open' : 'status-closed'}`}>
+              <span className="status-dot"></span>
+              {course.statusText || (course.admissionOpen !== false ? 'ভর্তি চলছে' : 'নতুন ব্যাচ শীঘ্রই')}
             </span>
           </div>
 
@@ -91,14 +92,23 @@ const CourseCard = ({ course }) => {
                   <Info size={16} /> বিবরণ
                 </button>
               )}
-              <a 
-                href={admissionUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn-admission"
-              >
-                ভর্তি হন <ExternalLink size={14} />
-              </a>
+              {course.admissionOpen !== false ? (
+                <a 
+                  href={admissionUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-admission"
+                >
+                  ভর্তি হন <ExternalLink size={14} />
+                </a>
+              ) : (
+                <button 
+                  disabled 
+                  className="btn-admission btn-admission-disabled"
+                >
+                  {course.statusText || 'নতুন ব্যাচ শীঘ্রই'}
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -113,8 +123,14 @@ const CourseCard = ({ course }) => {
             </button>
 
             <div className={`modal-header ${theme.bgClass}`}>
-              <div className="modal-category-badge">
-                {theme.icon} {course.category}
+              <div className="modal-category-badge-row">
+                <span className="modal-category-badge">
+                  {theme.icon} {course.category}
+                </span>
+                <span className={`status-badge ${course.admissionOpen !== false ? 'status-open' : 'status-closed'}`}>
+                  <span className="status-dot"></span>
+                  {course.statusText || (course.admissionOpen !== false ? 'ভর্তি চলছে' : 'নতুন ব্যাচ শীঘ্রই')}
+                </span>
               </div>
               <h2 className="modal-title">{course.name}</h2>
               <p className="modal-subtitle">{course.shortDescription}</p>
@@ -159,14 +175,23 @@ const CourseCard = ({ course }) => {
                 <button className="btn-modal-cancel" onClick={() => setShowModal(false)}>
                   বন্ধ করুন
                 </button>
-                <a 
-                  href={admissionUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn-modal-admission"
-                >
-                  এখনই ভর্তি হন <ExternalLink size={16} />
-                </a>
+                {course.admissionOpen !== false ? (
+                  <a 
+                    href={admissionUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn-modal-admission"
+                  >
+                    এখনই ভর্তি হন <ExternalLink size={16} />
+                  </a>
+                ) : (
+                  <button 
+                    disabled 
+                    className="btn-modal-admission btn-modal-disabled"
+                  >
+                    {course.statusText || 'নতুন ব্যাচ শীঘ্রই'}
+                  </button>
+                )}
               </div>
             </div>
           </div>

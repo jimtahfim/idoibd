@@ -41,10 +41,20 @@ export const normalizeCourse = (raw) => {
     return null;
   }
 
+  const slug = raw.slug || '';
+  const admissionOpen = raw.admissionOpen !== undefined 
+    ? Boolean(raw.admissionOpen) 
+    : (raw.isActive !== undefined ? Boolean(raw.isActive) : true);
+
+  const statusText = raw.statusText || (admissionOpen ? 'ভর্তি চলছে' : 'নতুন ব্যাচ শীঘ্রই');
+  const defaultApplyUrl = slug 
+    ? `https://admission.idoibd.com/apply?course=${encodeURIComponent(slug)}`
+    : `https://admission.idoibd.com/apply`;
+
   return {
-    id: raw.$id || raw.id || raw.slug || '',
+    id: raw.id || raw.$id || slug || '',
     name: raw.name || raw.title || 'শিরোনামহীন কোর্স',
-    slug: raw.slug || '',
+    slug: slug,
     category: raw.category || 'সাধারণ ও কর্মজীবি',
     shortDescription: raw.shortDescription || raw.short_description || raw.description || '',
     description: raw.description || raw.longDescription || raw.shortDescription || '',
@@ -53,9 +63,11 @@ export const normalizeCourse = (raw) => {
     duration: raw.duration || 'নির্দিষ্ট মেয়াদ',
     learningMode: raw.learningMode || raw.learning_mode || 'Live Online',
     isActive: raw.isActive !== undefined ? Boolean(raw.isActive) : true,
+    admissionOpen: admissionOpen,
+    statusText: statusText,
     sortOrder: raw.sortOrder || raw.sort_order || 999,
     imageUrl: raw.imageUrl || raw.image_url || raw.image || raw.thumbnail || '',
-    admissionUrl: raw.admissionUrl || raw.admission_url || `https://admission.idoibd.com/?course=${raw.slug || ''}`
+    admissionUrl: raw.admissionUrl || raw.admission_url || defaultApplyUrl
   };
 };
 

@@ -99,8 +99,9 @@ const CourseDetailPage = () => {
                 <span className={`category-badge ${theme.badgeClass}`}>
                   {theme.icon} {course.category}
                 </span>
-                <span className="mode-badge">
-                  <Video size={14} /> {course.learningMode}
+                <span className={`status-badge ${course.admissionOpen !== false ? 'status-open' : 'status-closed'}`}>
+                  <span className="status-dot"></span>
+                  {course.statusText || (course.admissionOpen !== false ? 'ভর্তি চলছে' : 'নতুন ব্যাচ শীঘ্রই')}
                 </span>
               </div>
               <h1 className="detail-title">{course.name}</h1>
@@ -166,17 +167,26 @@ const CourseDetailPage = () => {
               {/* CTA Section */}
               <div className="detail-cta-box">
                 <div className="cta-info">
-                  <h4>আজই ভর্তি সম্পন্ন করুন</h4>
-                  <p>আমাদের এডমিশন পোর্টালে গিয়ে সরাসরি রেজিস্ট্রেশন ফর্ম পূরণ করুন।</p>
+                  <h4>{course.admissionOpen !== false ? 'আজই ভর্তি সম্পন্ন করুন' : 'নতুন ব্যাচের নোটিফিকেশন পেতে যুক্ত থাকুন'}</h4>
+                  <p>{course.admissionOpen !== false ? 'আমাদের এডমিশন পোর্টালে গিয়ে সরাসরি রেজিস্ট্রেশন ফর্ম পূরণ করুন।' : 'নতুন ব্যাচ শুরু হওয়া মাত্রই রেজিস্ট্রেশন পোর্টাল উন্মুক্ত করা হবে।'}</p>
                 </div>
-                <a 
-                  href={admissionUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn btn-primary btn-large-cta"
-                >
-                  এখনই ভর্তি হন <ExternalLink size={18} />
-                </a>
+                {course.admissionOpen !== false ? (
+                  <a 
+                    href={admissionUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-primary btn-large-cta"
+                  >
+                    এখনই ভর্তি হন <ExternalLink size={18} />
+                  </a>
+                ) : (
+                  <button 
+                    disabled 
+                    className="btn btn-primary btn-large-cta btn-cta-disabled"
+                  >
+                    {course.statusText || 'নতুন ব্যাচ শীঘ্রই'}
+                  </button>
+                )}
               </div>
             </div>
           </div>
