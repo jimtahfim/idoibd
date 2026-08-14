@@ -8,13 +8,13 @@ import './CoursesSection.css';
 
 const categoriesList = [
   { id: 'all', label: 'সকল কোর্স', icon: <Layers size={18} /> },
-  { id: 'মাদ্রাসা শিক্ষার্থী', label: 'মাদ্রাসা শিক্ষার্থী', icon: <BookOpen size={18} /> },
+  { id: 'মাদরাসা শিক্ষার্থী', label: 'মাদরাসা শিক্ষার্থী', icon: <BookOpen size={18} /> },
   { id: 'জেনারেল ছাত্র', label: 'জেনারেল ছাত্র', icon: <GraduationCap size={18} /> },
   { id: 'সাধারণ ও কর্মজীবি', label: 'সাধারণ ও কর্মজীবি', icon: <Briefcase size={18} /> }
 ];
 
 const categoryHashAlias = {
-  'madrasa': 'মাদ্রাসা শিক্ষার্থী',
+  'madrasa': 'মাদরাসা শিক্ষার্থী',
   'general': 'জেনারেল ছাত্র',
   'pro': 'সাধারণ ও কর্মজীবি',
   'running': 'all',

@@ -56,7 +56,7 @@ const Navbar = () => {
             {activeDropdown === 'courses' && (
               <ul className="dropdown-menu">
                 <li><Link to="/courses">সকল কোর্স</Link></li>
-                <li><Link to="/courses#madrasa">মাদ্রাসা শিক্ষার্থী</Link></li>
+                <li><Link to="/courses#madrasa">মাদরাসা শিক্ষার্থী</Link></li>
                 <li><Link to="/courses#general">জেনারেল ছাত্র</Link></li>
                 <li><Link to="/courses#pro">সাধারণ ও কর্মজীবি</Link></li>
               </ul>
@@ -94,7 +94,7 @@ const Navbar = () => {
             <li><span className="dropdown-label">কোর্সসমূহ</span>
               <ul className="sub-links">
                 <li><Link to="/courses" onClick={() => setMobileMenuOpen(false)}>সকল কোর্স</Link></li>
-                <li><Link to="/courses#madrasa" onClick={() => setMobileMenuOpen(false)}>মাদ্রাসা শিক্ষার্থী</Link></li>
+                <li><Link to="/courses#madrasa" onClick={() => setMobileMenuOpen(false)}>মাদরাসা শিক্ষার্থী</Link></li>
                 <li><Link to="/courses#general" onClick={() => setMobileMenuOpen(false)}>জেনারেল ছাত্র</Link></li>
                 <li><Link to="/courses#pro" onClick={() => setMobileMenuOpen(false)}>সাধারণ ও কর্মজীবি</Link></li>
               </ul>

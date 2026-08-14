@@ -8,7 +8,7 @@ import './CourseDetailPage.css';
 const DEFAULT_ADMISSION_URL = "https://admission.idoibd.com/";
 
 const categoryThemeMap = {
-  "মাদ্রাসা শিক্ষার্থী": {
+  "মাদরাসা শিক্ষার্থী": {
     bgClass: "cat-madrasa-bg",
     badgeClass: "badge-madrasa",
     icon: <BookOpen size={22} />
@@ -99,6 +99,11 @@ const CourseDetailPage = () => {
                 <span className={`category-badge ${theme.badgeClass}`}>
                   {theme.icon} {course.category}
                 </span>
+                {course.fee === 0 && (
+                  <span className="badge-free">
+                    <Sparkles size={14} /> ফ্রি কোর্স
+                  </span>
+                )}
                 <span className={`status-badge ${course.admissionOpen !== false ? 'status-open' : 'status-closed'}`}>
                   <span className="status-dot"></span>
                   {course.statusText || (course.admissionOpen !== false ? 'ভর্তি চলছে' : 'নতুন ব্যাচ শীঘ্রই')}

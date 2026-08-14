@@ -28,7 +28,7 @@ The primary objective is to connect `idoibd.com` directly to the public read-onl
    - Contains 33 static course records with fields: `$id`, `name`, `slug`, `category`, `shortDescription`, `description`, `fee`, `currency`, `duration`, `learningMode`, `isActive`, `sortOrder`.
 2. **`src/components/sections/CoursesSection.jsx`**:
    - Imports `coursesData` directly from `src/data/courses.json`.
-   - Handles client-side category filtering (`মাদ্রাসা শিক্ষার্থী`, `জেনারেল ছাত্র`, `সাধারণ ও কর্মজীবি`) and keyword search.
+   - Handles client-side category filtering (`মাদরাসা শিক্ষার্থী`, `জেনারেল ছাত্র`, `সাধারণ ও কর্মজীবি`) and keyword search.
    - Renders category tab count badges and summary stats strip.
 3. **`src/components/sections/CourseCard.jsx`**:
    - Renders individual course cards and a detail modal popup (`showModal`).
