@@ -8,6 +8,7 @@ import './CoursesSection.css';
 
 const categoriesList = [
   { id: 'all', label: 'সকল কোর্স', icon: <Layers size={18} /> },
+  { id: 'free', label: 'ফ্রি কোর্স', icon: <Sparkles size={18} /> },
   { id: 'মাদরাসা শিক্ষার্থী', label: 'মাদরাসা শিক্ষার্থী', icon: <BookOpen size={18} /> },
   { id: 'জেনারেল ছাত্র', label: 'জেনারেল ছাত্র', icon: <GraduationCap size={18} /> },
   { id: 'সাধারণ ও কর্মজীবি', label: 'সাধারণ ও কর্মজীবি', icon: <Briefcase size={18} /> }
@@ -17,6 +18,7 @@ const categoryHashAlias = {
   'madrasa': 'মাদরাসা শিক্ষার্থী',
   'general': 'জেনারেল ছাত্র',
   'pro': 'সাধারণ ও কর্মজীবি',
+  'free': 'free',
   'running': 'all',
   'upcoming': 'all',
   'short': 'all'
@@ -33,7 +35,15 @@ const CoursesSection = () => {
   const selectedCategory = userSelectedCategory || hashCategory || 'all';
 
   const filteredCourses = courses.filter(course => {
-    const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
+    let matchesCategory = false;
+    if (selectedCategory === 'all') {
+      matchesCategory = true;
+    } else if (selectedCategory === 'free') {
+      matchesCategory = course.fee === 0;
+    } else {
+      matchesCategory = course.category === selectedCategory;
+    }
+
     const matchesSearch = 
       course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (course.shortDescription && course.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -44,6 +54,7 @@ const CoursesSection = () => {
 
   const getCountForCategory = (catId) => {
     if (catId === 'all') return courses.length;
+    if (catId === 'free') return courses.filter(c => c.fee === 0).length;
     return courses.filter(c => c.category === catId).length;
   };
 
