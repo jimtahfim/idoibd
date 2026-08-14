@@ -1,3 +1,5 @@
+import staticCourses from '../../data/courses.json';
+
 /**
  * @typedef {Object} PublicCourse
  * @property {string} id
@@ -58,8 +60,36 @@ export const normalizeCourse = (raw) => {
 };
 
 /**
+ * Gets fallback courses from local static dataset.
+ * 
+ * @returns {PublicCourse[]}
+ */
+export const getFallbackActiveCourses = () => {
+  if (!Array.isArray(staticCourses)) return [];
+  const normalized = staticCourses
+    .map(normalizeCourse)
+    .filter(course => course !== null && course.isActive);
+
+  normalized.sort((a, b) => (a.sortOrder || 999) - (b.sortOrder || 999));
+  return normalized;
+};
+
+/**
+ * Gets fallback course by slug from local static dataset.
+ * 
+ * @param {string} slug 
+ * @returns {PublicCourse|null}
+ */
+export const getFallbackCourseBySlug = (slug) => {
+  if (!Array.isArray(staticCourses) || !slug) return null;
+  const raw = staticCourses.find(c => c.slug === slug || c.$id === slug || c.id === slug);
+  return raw ? normalizeCourse(raw) : null;
+};
+
+/**
  * Fetches all active courses from the public admission API.
  * GET /courses
+ * Falls back to local static course dataset if API call fails.
  * 
  * @returns {Promise<PublicCourse[]>}
  */
@@ -100,16 +130,21 @@ export const getActiveCourses = async () => {
     // Sort by sortOrder if present
     normalized.sort((a, b) => (a.sortOrder || 999) - (b.sortOrder || 999));
 
-    return normalized;
+    if (normalized.length > 0) {
+      return normalized;
+    }
+
+    return getFallbackActiveCourses();
   } catch (err) {
-    console.error('Failed to fetch active courses:', err);
-    throw err;
+    console.warn('API fetch failed, using local static course dataset:', err.message || err);
+    return getFallbackActiveCourses();
   }
 };
 
 /**
  * Fetches course details by slug from the public admission API.
  * GET /courses/:slug
+ * Falls back to local static course dataset if API call fails.
  * 
  * @param {string} slug 
  * @returns {Promise<PublicCourse>}
@@ -131,6 +166,8 @@ export const getCourseBySlug = async (slug) => {
     });
 
     if (response.status === 404) {
+      const fallback = getFallbackCourseBySlug(slug);
+      if (fallback) return fallback;
       const err = new Error('কোর্সটি খুঁজে পাওয়া যায়নি');
       err.status = 404;
       throw err;
@@ -145,6 +182,8 @@ export const getCourseBySlug = async (slug) => {
     
     const normalized = normalizeCourse(rawCourse);
     if (!normalized) {
+      const fallback = getFallbackCourseBySlug(slug);
+      if (fallback) return fallback;
       const err = new Error('কোর্সটি খুঁজে পাওয়া যায়নি');
       err.status = 404;
       throw err;
@@ -152,7 +191,14 @@ export const getCourseBySlug = async (slug) => {
 
     return normalized;
   } catch (err) {
-    console.error(`Failed to fetch course detail for slug "${slug}":`, err);
+    if (err.status === 404) {
+      throw err;
+    }
+    console.warn(`API fetch for slug "${slug}" failed, checking local static fallback:`, err.message || err);
+    const fallback = getFallbackCourseBySlug(slug);
+    if (fallback) {
+      return fallback;
+    }
     throw err;
   }
 };
