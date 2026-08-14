@@ -80,9 +80,16 @@ export const getFallbackActiveCourses = () => {
   if (!Array.isArray(staticCourses)) return [];
   const normalized = staticCourses
     .map(normalizeCourse)
-    .filter(course => course !== null && course.isActive);
+    .filter(course => course !== null);
 
-  normalized.sort((a, b) => (a.sortOrder || 999) - (b.sortOrder || 999));
+  normalized.sort((a, b) => {
+    const aActive = a.isActive !== false && a.admissionOpen !== false;
+    const bActive = b.isActive !== false && b.admissionOpen !== false;
+    if (aActive !== bActive) {
+      return aActive ? -1 : 1;
+    }
+    return (a.sortOrder || 999) - (b.sortOrder || 999);
+  });
   return normalized;
 };
 
@@ -99,7 +106,7 @@ export const getFallbackCourseBySlug = (slug) => {
 };
 
 /**
- * Fetches all active courses from the public admission API.
+ * Fetches all courses (active and inactive) from the public admission API.
  * GET /courses
  * Falls back to local static course dataset if API call fails.
  * 
@@ -137,10 +144,17 @@ export const getActiveCourses = async () => {
 
     const normalized = rawList
       .map(normalizeCourse)
-      .filter(course => course !== null && course.isActive);
+      .filter(course => course !== null);
 
-    // Sort by sortOrder if present
-    normalized.sort((a, b) => (a.sortOrder || 999) - (b.sortOrder || 999));
+    // Sort active courses first, then inactive courses, then by sortOrder
+    normalized.sort((a, b) => {
+      const aActive = a.isActive !== false && a.admissionOpen !== false;
+      const bActive = b.isActive !== false && b.admissionOpen !== false;
+      if (aActive !== bActive) {
+        return aActive ? -1 : 1;
+      }
+      return (a.sortOrder || 999) - (b.sortOrder || 999);
+    });
 
     if (normalized.length > 0) {
       return normalized;

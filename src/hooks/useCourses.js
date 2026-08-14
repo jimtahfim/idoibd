@@ -6,7 +6,7 @@ const memoryCache = {
   coursesList: null,
   coursesBySlug: new Map(),
   lastFetched: null,
-  CACHE_TTL_MS: 5 * 60 * 1000 // 5 minutes cache TTL
+  CACHE_TTL_MS: 30 * 1000 // 30 seconds cache TTL
 };
 
 /**
